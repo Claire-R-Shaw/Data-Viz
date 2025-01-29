@@ -1,0 +1,18 @@
+---
+title: "Obj_color"
+author: "CS"
+format: html
+---
+
+```{r}
+library(readxl)
+data <- read_excel("~/Desktop/data for BCB520.xlsx")
+View(data)
+```
+
+
+```{r}
+hist(data$a)
+boxplot(data$a)
+``` 
+
