@@ -1,0 +1,64 @@
+---
+title: "Assignment 4"
+subtitle: Marks and Channels
+author: Claire Shaw
+date: 2025-02-15
+category: Assignment
+image: ~/Desktop/Cow.png.
+code-fold: true
+code-tools: true
+discription: An endeavor to enhance the representation of meat color, a* values, in a way that is visually appealing, more intuitive and just cooler.I will also show a confusing, hard to read visualization. Also just FYI I am using a* values, higher a* values = more red, lower a* values = less red. 
+---
+### A little bit about the data
+
+In the below figure I used a heat map to show how the color of fresh beef patties changes over time. Different antioxidants and amounts were added to each treatment group.
+```{r}
+library(tidyverse)
+library(readxl)
+Data4<- read.csv("Data4.csv")
+
+```
+---
+### heatmap
+---
+This example shows how it is hard to compare color when hue/luminescence is similar. enjoy :)
+---
+
+```{r}
+ggplot(Data4,aes(x=day,y=trt,fill=a))+
+  geom_tile()+
+  scale_fill_gradient(low="brown",high="red")+
+  labs(
+    title = "a* values across retail display",
+    x = "Day of Retail Display",
+    y = "a* (Reddness)")+
+  theme_minimal()+
+  theme(
+    plot.title = element_text(hjust = 0.5))
+  
+```
+
+Figure 1: which one had more discoloration (is less red) Control on day 1 or 2.0& M on day 2?? Hard telling not knowing. We can see that Rosemary at 2.0% did prolong discoloration the best. 
+
+
+
+### line graph 
+
+This is a better way to show a* vales over retail display.
+
+```{r}
+ggplot(Data4,aes(x=day,y=a,color=trt))+
+  geom_line(linewidth=1.5)+
+  scale_color_manual(values=c("yellow","orange","darkgreen","darkgreen","hotpink","red"),name = "Antioxidants")+
+  labs(
+    title = "a* values across retail display",
+    x = "Day of Retail Display",
+    y = "a* (Reddness)"
+  )+
+  theme_minimal()+
+  theme(
+    plot.title = element_text(hjust = 0.5)
+  )
+
+```
+Figure 2: Showing it like this makes it easier to follow, you can see clear separation between treatments. The green lines are the positive controls, red is the negative control. We are mostly interested in the yellow, orange and pink lines. 
