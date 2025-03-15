@@ -1,0 +1,104 @@
+---
+title: "Assignment 4"
+subtitle: Marks and Channels
+author: Claire Shaw
+date: 2025-02-15
+category: Assignment
+image: ~/Desktop/Cow.png.
+code-fold: true
+code-tools: true
+discription: An endeavor to enhance the representation of meat color, a* values, in a way that is visually appealing, more intuitive and just cooler while compairong it to an ugly, confusing, hard to read visualization.
+---
+
+
+## Running Code
+
+
+
+```{r}
+ library(readxl)
+Data4 <- read_excel("~/Desktop/data_Viz/Data4.xlsx")
+  View(Data4)
+```
+
+
+
+```{r}
+library(ggplot2)
+
+```
+```{r}
+###points
+ggplot(data, aes(x = interaction(trt, Day), y = a)) +
+  geom_point(aes(color = trt), size = 3) + 
+  labs(title = "a* by trt and Day",
+       x = "trt and Day",
+       y = "a*") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+  
+ ### plot mean  
+summary_data <- data %>%  group_by(trt) %>%  summarize(mean_a = mean(a))
+  
+ggplot(summary_data, aes(x = interaction(trt, day), y = mean_a)) +  
+    geom_point(aes(color = trt), size = 5) +
+     labs(title = "a*",
+            x = "Treatment",
+                   y = "a*") +
+                     theme_minimal() +
+                       theme(axis.text.x = element_text(angle = 45, hjust = 1))
+                       
+summary_data <- data %>%  group_by(trt) %>%  summarize(mean_a = mean(a)
+
+### heat map
+
+data <- data.frame(trt = c("Control","1.0%M", "2.0%M", 0.26%M, "2.0% Rosemary"),
+day = rep(0:4, each = 1, length.out = 25), 
+    a = c(20.56, 16.58, 15.08, 12.10, 9.46,
+          19.44, 18.67, 14.36, 13.16, 9.33,
+          19.36, 16.68, 11.74, 11.04, 8.01,
+          20.42, 19.55, 16.61, 15.64, 9.93,
+          22.81, 21.00, 18.06, 16.65, 15.96)
+
+
+ggplot(data,aes(x = day,y = trt)) +
+geom_tile(aes(fill = a), color = "white") +
+scale_fill_gradient(low = "lightblue", high = "red") +
+labs(title = "Heat Map of a* Values by Treatment and Day",
+  x = "day",
+  y = "Treatment",
+  fill = "a* Value") +
+theme_minimal() +
+theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+### Hist            
+
+# Color
+
+custom_colors <- colorRampPalette(c("brown", "red"))(5)
+# Create a data frame
+data_df <- data.frame(trt = c("Control", "Control", "Control", "Control", "Control",
+          "1.0% M", "1.0% M", "1.0% M", "1.0% M",
+           "2.0%M", "2.0%M", "2.0%M", "2.0%M",          
+           "0.25% M", "0.25% M", "0.25% M", "0.25% M",
+          "2.0% Potato", "2.0% Potato", "2.0% Potato", "2.0% Potato",          
+          "2.0% Rosemary", "2.0% Rosemary", "2.0% Rosemary", "2.0% Rosemary"),  
+day = rep(0:4, each = 5),
+a = c(20.56, 16.58, 15.08, 12.10, 9.46,
+19.44, 18.67, 14.36, 13.16, 9.33,
+19.36, 16.68, 11.74, 11.04, 8.01,
+20.42, 19.55, 16.61, 15.64, 9.93,
+20.81, 16.07, 17.73, 17.53, 11.62))
+# Convert the data frame to a matrix suitable for heatmap()# Ensuring that the combination of treatment (trt) and day is uniquely positione
+data_matrix <- xtabs(a ~ trt + day, data = data_df)
+# Create the heatmap
+heatmap(data_matrix, Rowv = NA, Colv = NA, scale = "none",
+col = heat.colors(256), margins = c(5, 10),
+main = "Heat Map of a*")  
+  
+  
+ggplot(data4,aes(x=day,y=trt,fill=`a*`))+
+
+
+
+  

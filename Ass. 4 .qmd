@@ -1,0 +1,62 @@
+---
+title: "Assignment 4"
+subtitle: Marks and Channels
+author: Claire Shaw
+date: 2025-02-15
+category: Assignment
+image: ~/Desktop/Cow.png.
+code-fold: true
+code-tools: true
+discription: An endeavor to enhance the representation of meat color, a* values, in a way that is visually appealing, more intuitive and just cooler while compairong it to an ugly, confusing, hard to read visualization.
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(vroom)
+
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+my_data \<- read_csv("\~Desktop/data_Viz/Data for BCB520.xlsx")
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(vroom)
+library(readxl)
+data
+```
+
+  # A tibble: 120 × 6
+   Batch   Day trt       L     a     b
+   <dbl> <dbl> <chr> <dbl> <dbl> <dbl>
+ 1     1     0 C      41.2  21.0  16.0
+ 2     2     0 C      42.6  17.8  16.2
+ 3     3     0 C      38.8  21.4  13.7
+ 4     4     0 C      40.3  23.8  17.1
+ 5     5     0 C      40.7  19.2  14.9
+ 6     6     0 C      40.5  21.2  15.1
+ 7     7     0 R      41.1  21.8  16.0
+ 8     8     0 R      43.3  22.1  17.5
+ 9     9     0 R      40.4  24.6  18  
+10    10     0 R      41.0  22.6  16.8
+# ℹ 110 more rows
+# ℹ Use `print(n = ...)` to see more rows
+  
+```{r}
+ggplot(data, aes(x=a))+
+  labs(title = "a* values for fresh beef patties",x= "Trt", y="a*" )+
+  geom_line(color ="red", size=2)
+
+ggplot(data, aes(x = trt, y = a)) +  geom_line(color = "red", linewidth = 2) +  labs(title = "a* values for fresh beef patties", x = "Trt", y = "a*")
+  
+data <- data.frame(  trt = c("C", "M1", "M2", "R"),  
+labels  a = c(15, 20, 25, 18) 
+data$Trt <- factor(data$Trt, levels = c("C", "M1", "M2", "R"))
+ggplot(data, aes(x = Trt, y = a, group = 1)) +  
+  geom_line(color = "red", linewidth = 2) +
+  labs(title = "a* values for fresh beef patties", x = "Trt", y = "a*") +
+  geom_point(color = "red", size = 3)
